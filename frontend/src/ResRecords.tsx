@@ -1,10 +1,9 @@
-import { Box, Button, Container, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, styled, tableCellClasses } from "@mui/material"
+import { Box, Container, Grid, Table, TableCell, TableContainer, TableHead, TableRow, Typography, styled, tableCellClasses } from "@mui/material"
 import Appbar from "./components/Appbar"
 import './App.css'
 import rabbitImage from './image/rabbit.png'
 import hamsterImage from './image/hamster.png'
 import "./App.css"
-import { Link, useLocation } from "react-router-dom"
 // import Edit from "./components/EditDialog"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import ResTable from "./components/ResTable"
