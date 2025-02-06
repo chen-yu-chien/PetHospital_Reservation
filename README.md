@@ -5,8 +5,8 @@
 ## 專案啟動
 * 後端
 1. 開啟 Eclipse 後，從檔案系統匯入 Gradle 專案
-   > [!WARNING]
-   > 匯入時須進入到放有 bin 資料夾的目錄層
+> [!WARNING]
+> 匯入時須進入到放有 bin 資料夾的目錄層
 2. 執行 /src/main/java/VethospitalApplication.java
    
 * 前端
