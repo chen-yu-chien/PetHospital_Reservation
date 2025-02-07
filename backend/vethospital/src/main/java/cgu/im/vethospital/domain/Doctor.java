@@ -23,8 +23,12 @@ public class Doctor {
 	private String name, department;
 
 	@JsonIgnore
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="doctor")
-    private List<Reservation> reservations;
+	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Clinic> clinicTimes;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Reservation> reservations;
 	
 	public Doctor() {
 		super();
@@ -62,6 +66,14 @@ public class Doctor {
 
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
+	}
+
+	public List<Clinic> getClinicTimes() {
+		return clinicTimes;
+	}
+
+	public void setClinicTimes(List<Clinic> clinicTimes) {
+		this.clinicTimes = clinicTimes;
 	}
 
 }

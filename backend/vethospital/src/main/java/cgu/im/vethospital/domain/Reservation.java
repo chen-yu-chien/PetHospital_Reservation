@@ -15,24 +15,27 @@ public class Reservation {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long resid;
 	
-	private String date, time, petname, ownername, tel;
+	private String date, time, symptom;
 
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="doctor")
 	private Doctor doctor;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="pet")
+	private Pet pet;
 
 	public Reservation() {
 		super();
 	}
 
-	public Reservation(String date, String time, String petname, String ownername, String tel,
+	public Reservation(String date, String time, cgu.im.vethospital.domain.Pet pet, String symptom,
 			cgu.im.vethospital.domain.Doctor doctor) {
 		super();
 		this.date = date;
 		this.time = time;
-		this.petname = petname;
-		this.ownername = ownername;
-		this.tel = tel;
+		this.pet = pet;
+		this.symptom = symptom;
 		this.doctor = doctor;
 	}
 
@@ -60,28 +63,20 @@ public class Reservation {
 		this.time = time;
 	}
 
-	public String getPetname() {
-		return petname;
+	public String getSymptom() {
+		return symptom;
 	}
 
-	public void setPetname(String petname) {
-		this.petname = petname;
+	public void setSymptom(String symptom) {
+		this.symptom = symptom;
 	}
 
-	public String getOwnername() {
-		return ownername;
+	public Pet getPet() {
+		return pet;
 	}
 
-	public void setOwnername(String ownername) {
-		this.ownername = ownername;
-	}
-
-	public String getTel() {
-		return tel;
-	}
-
-	public void setTel(String tel) {
-		this.tel = tel;
+	public void setPet(Pet pet) {
+		this.pet = pet;
 	}
 
 	public Doctor getDoctor() {
