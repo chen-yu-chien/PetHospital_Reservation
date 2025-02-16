@@ -1,78 +1,66 @@
-// export type ScheduleResponse = {
-//     date: string,
-//     starttime: string,
-//     endtime: string,
-//     dept: string,
-//     _links:{
-//         self: {
-//             href: string;
-//         },
-//         doctor: {
-//             href: string;
-//         },
-//     }
-// }
+export type ScheduleResponse = {
+    date: string,
+    startTime: string,
+    endTime: string,
+    dept: string
+}
 
 export type ReservationResponse = {
+    resid: number,
     date: string,
     time: string,
-    petname: string,
-    ownername: string,
-    tel: string,
-    _links: {
-        self: {
-            href: string;
-        }
-    }
+    symptom: string,
+    doctor: DoctorResponse,
+    pet: PetResponse,
 }
 
 export type Reservation = {
     date: string,
     time: string,
-    petname: string,
-    ownername: string,
-    tel: string,
+    symptom: string,
+    pet: PetResponse,
+    doctor: DoctorResponse,
 }
 
 export type ReservationEntry = {
     reservation: Reservation;
-    url: string;
+    resid: number;
 }
 
-// export type OwnerResponse = {
-//     name: string,
-//     birthday: string,
-//     identifyId: string,
-//     gender: string,
-//     telephone: string,
-//     _links: {
-//         self: {
-//             href: string;
-//         }
-//     }
-// }
+export type OwnerResponse = {
+    ownerid: number,
+    name: string,
+    birthday: string,
+    identifyId: string,
+    gender: string,
+    telephone: string,
+    address: string,
+}
 
-// export type DoctorResponse = {
-//     name: string,
-//     department: string,
-//     _links: {
-//         self:{
-//             href: string;
-//         },
-//     }
-// }
+export type DoctorResponse = {
+    doctorid: number,
+    name: string,
+    department: string,
+}
 
-// export type PetResponse = {
-//     name: string,
-//     gender: number,
-//     type: string,
-//     birthday: string,
-//     _links: {
-//         self: {
-//             href: string;
-//         },
-//         ownerid: {
-//             href: string;
-//         },
-//     }
-// }
+export type PetResponse = {
+    name: string,
+    gender: number,
+    type: string,
+    birthday: string,
+    waferid: string,
+    feature: string,
+    vaccineDate: string,
+    sterilize: number,
+    _links: {
+        self: {
+            href: string;
+        },        
+        res: {
+            href: string;
+        },
+        owner: {
+            href: string;
+        }
+    }
+}

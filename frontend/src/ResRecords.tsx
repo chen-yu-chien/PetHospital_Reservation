@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Table, TableCell, TableContainer, TableHead, TableRow, Typography, styled, tableCellClasses } from "@mui/material"
+import { Box, Button, Container, Grid, Table, TableCell, TableContainer, TableHead, TableRow, Typography, styled, tableCellClasses } from "@mui/material"
 import Appbar from "./components/Appbar"
 import './App.css'
 import rabbitImage from './image/rabbit.png'
@@ -8,22 +8,24 @@ import "./App.css"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import ResTable from "./components/ResTable"
 import Add from "./components/AddDialog"
+import { useLocation } from "react-router"
+import { Link } from "react-router-dom"
+import OwnerInfo from "./components/OwnerInfo"
 
 function ResRecords(){
     const queryClient = new QueryClient();
     
-    // const state = useLocation().state;
-    // const startdate = state.startdate;
-    // const enddate = state.enddate;
-    // const ownername = state.name;
-    // const identifyid = state.identifyid
-    // console.log(ownername+','+identifyid+','+startdate+','+ enddate)
-
+    const state = useLocation().state;
+    const startdate = state.startdate;
+    const enddate = state.enddate;
+    const identifyid = state.identifyid;
+    console.log(identifyid+','+startdate+','+ enddate)
+    
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
           backgroundColor: 'aquamarine',
           color: theme.palette.common.white,
-          fontSize: 23,
+          fontSize: 20,
           fontWeight: 700,
         },
         [`&.${tableCellClasses.body}`]: {
@@ -53,55 +55,54 @@ function ResRecords(){
                     <Typography
                         variant="h4"
                         sx={{
-                            fontFamily: 'monospace',
                             fontWeight: 550,
                             mr: 5
                     }}>
                         預約紀錄
                     </Typography>
-                    <QueryClientProvider client={queryClient}>
+                    {/* <QueryClientProvider client={queryClient}>
                         <Add/>
-                    </QueryClientProvider>
+                    </QueryClientProvider> */}
                 </Box>
+                <QueryClientProvider client={queryClient}>
+                    <OwnerInfo identifyid={identifyid}/>
+                </QueryClientProvider>
                 <TableContainer>
                     <Table sx={{ minWidth: 800 }} aria-label="customized table">
                         <TableHead>
                         <TableRow>
                             <StyledTableCell align="center">看診日期</StyledTableCell>
                             <StyledTableCell align="center">看診時間</StyledTableCell>
+                            <StyledTableCell align="center">看診醫生</StyledTableCell>
                             <StyledTableCell align="center">寵物名字</StyledTableCell>
-                            <StyledTableCell align="center">飼主姓名</StyledTableCell>
-                            <StyledTableCell align="center">聯絡電話</StyledTableCell>
+                            <StyledTableCell align="center">症狀簡述</StyledTableCell>
                             <StyledTableCell align="center"></StyledTableCell>
                             <StyledTableCell align="center"></StyledTableCell>
                         </TableRow>
                         </TableHead>
                         <QueryClientProvider client={queryClient}>
-                            {/* <TableBody> */}
-                                {/* <ResTable startdate={startdate} enddate={enddate} ownername={ownername} identifyid={identifyid}/> */}
-                            <ResTable/>
-                            {/* </TableBody> */}
+                            <ResTable startdate={startdate} enddate={enddate} identifyid={identifyid}/>
                         </QueryClientProvider>
                     </Table>
                 </TableContainer>
-                {/* <Box sx={{height: '20vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <Box sx={{height: '20vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <Link to="/Search">
-                    <Button sx={{
-                        border: 1,
-                        borderColor: 'aquamarine',
-                        borderWidth: 2, borderRadius: 5,
-                        bgcolor: 'white',
-                        color: 'aquamarine',
-                        width: '7vw',
-                        height: '7vh',
-                        ":hover": {bgcolor: "aquamarine", color: "white"}
-                    }}>
-                        <Typography sx={{color: 'inherit', fontSize: 20, fontWeight: 700, fontFamily: 'monospace',}}>
-                            返回
-                        </Typography>
-                    </Button>
+                        <Button sx={{
+                            border: 1,
+                            borderColor: 'aquamarine',
+                            borderWidth: 2, borderRadius: 5,
+                            bgcolor: 'white',
+                            color: 'aquamarine',
+                            width: '7vw',
+                            height: '7vh',
+                            ":hover": {bgcolor: "aquamarine", color: "white"}
+                        }}>
+                            <Typography sx={{color: 'inherit', fontSize: 20, fontWeight: 700, fontFamily: 'monospace',}}>
+                                返回
+                            </Typography>
+                        </Button>
                     </Link>
-                </Box> */}
+                </Box>
             </Grid>
             <Grid item xs={2} sx={{height: '100vh'}}>
                 <Box component={'img'}

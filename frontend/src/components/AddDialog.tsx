@@ -182,7 +182,7 @@ function Add() {
             </DialogContent>
             <DialogActions>
             <Button autoFocus onClick={handleSave} sx={{fontSize: 15}}>
-                確認修改
+                確認預約
             </Button>
             </DialogActions>
         </BootstrapDialog>

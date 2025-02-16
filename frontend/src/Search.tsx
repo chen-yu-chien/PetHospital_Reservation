@@ -15,14 +15,11 @@ function Search() {
         return date.setDate(date.getDate() + 7)
     }
 
-    const [name, setName] = useState('')
+    // const [name, setName] = useState('')
     const [identifyid, setIdentifyid] = useState('')
     const [startdate, setStartdate] = useState(dayjs(getMinDate()).format('YYYY/MM/DD'))
     const [enddate, setEnddate] = useState(dayjs(getMinDate()).format('YYYY/MM/DD'))
-
-    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setName(event.target.value)
-    }
+    
     const handleIDChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIdentifyid(event.target.value)
     }
@@ -32,7 +29,7 @@ function Search() {
     const handleEndDateChange = (newDate: Dayjs | null) => {
         setEnddate((newDate == null)? '':newDate.format('YYYY/MM/DD'))
     }
-    const state = {name: name, identifyid: identifyid, startdate: startdate, enddate: enddate}
+    const state = {identifyid: identifyid, startdate: startdate, enddate: enddate}
 
     
     return(
@@ -73,21 +70,7 @@ function Search() {
                                     fontSize: 20,
                                     mb: 2,
                                 }}>
-                                    飼主姓名
-                                </Typography>
-                                <TextField id="OwnerName" placeholder="請輸入姓名" sx={{width: '17vw'}}
-                                    onChange={handleNameChange}></TextField>
-                            </Box>
-                            <Box sx={{width: '15vw', ml: 4}}>
-                                <Typography
-                                    // variant="h6" 
-                                    sx={{
-                                    fontFamily: 'monospace',
-                                    fontWeight: 550,
-                                    fontSize: 20,
-                                    mb: 2,
-                                }}>
-                                    身分證字號
+                                    飼主身分證字號
                                 </Typography>
                                 <TextField id="IdentifyId" placeholder="請輸入身分證字號" sx={{width: '17vw'}}
                                     onChange={handleIDChange}></TextField>
@@ -120,28 +103,28 @@ function Search() {
                         </Box>
                         <Box sx={{height: '7vh', display: 'flex', justifyContent: 'center'}}>
                             <Link to="/ResRecords" state={state}>
-                            <Button sx={{border: 1,
-                                    borderColor: 'aquamarine',
-                                    borderWidth: 2, borderRadius: 5,
-                                    bgcolor: 'white',
-                                    color: 'aquamarine',
-                                    ":hover": {bgcolor: "aquamarine", color: "white"}, 
-                                    width: '7vw',
-                                    height: '7vh',
-                                    mt: 5
-                            }}>
-                                <Typography sx={{
-                                    display: { xs: 'none', md: 'flex' },
-                                    fontFamily: 'monospace',
-                                    fontWeight: 700,
-                                    fontSize: 20,
-                                    letterSpacing: '.1rem',
-                                    color: 'inherit',
-                                    textDecoration: 'none',
+                                <Button sx={{border: 1,
+                                        borderColor: 'aquamarine',
+                                        borderWidth: 2, borderRadius: 5,
+                                        bgcolor: 'white',
+                                        color: 'aquamarine',
+                                        ":hover": {bgcolor: "aquamarine", color: "white"}, 
+                                        width: '7vw',
+                                        height: '7vh',
+                                        mt: 5
                                 }}>
-                                    查詢
-                                </Typography>
-                            </Button>
+                                    <Typography sx={{
+                                        display: { xs: 'none', md: 'flex' },
+                                        fontFamily: 'monospace',
+                                        fontWeight: 700,
+                                        fontSize: 20,
+                                        letterSpacing: '.1rem',
+                                        color: 'inherit',
+                                        textDecoration: 'none',
+                                    }}>
+                                        查詢
+                                    </Typography>
+                                </Button>
                             </Link>
                         </Box>
                     </Box>

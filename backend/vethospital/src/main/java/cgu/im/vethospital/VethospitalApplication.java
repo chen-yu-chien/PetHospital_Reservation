@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import cgu.im.vethospital.domain.Doctor;
 import cgu.im.vethospital.domain.DoctorRepository;
@@ -14,28 +15,29 @@ import cgu.im.vethospital.domain.Pet;
 import cgu.im.vethospital.domain.PetRepository;
 import cgu.im.vethospital.domain.Owner;
 import cgu.im.vethospital.domain.OwnerRepository;
-import cgu.im.vethospital.domain.Clinic;
-import cgu.im.vethospital.domain.ClinicRepository;
+import cgu.im.vethospital.domain.Schedule;
+import cgu.im.vethospital.domain.ScheduleRepository;
 
 
 
 @SpringBootApplication
+@ComponentScan(basePackages = "cgu.im.vethospital")
 public class VethospitalApplication implements CommandLineRunner {
 
 	DoctorRepository drepository;
 	ReservationRepository rrepository;
 	PetRepository prepository;
 	OwnerRepository orepository;
-	ClinicRepository crepository;
+	ScheduleRepository srepository;
 
 	public VethospitalApplication(DoctorRepository drepository, ReservationRepository rrepository, PetRepository prepository,
-			OwnerRepository orepository, ClinicRepository crepository) {
+			OwnerRepository orepository, ScheduleRepository srepository) {
 		super();
 		this.drepository = drepository;
 		this.rrepository = rrepository;
 		this.prepository = prepository;
 		this.orepository = orepository;
-		this.crepository = crepository;
+		this.srepository = srepository;
 	}
 	
 	private static final Logger logger =
@@ -82,22 +84,24 @@ public class VethospitalApplication implements CommandLineRunner {
 		prepository.save(pet5);
 		
 		
-		rrepository.save(new Reservation("2024-05-20", "10:00", pet1, "食慾不振，寵物不願意進食", doctor1));
-		rrepository.save(new Reservation("2024-05-20", "15:00", pet2, "嘔吐", doctor3));
-		rrepository.save(new Reservation("2024-05-21", "11:30", pet3, "排便異常，持續腹瀉", doctor4));
-		rrepository.save(new Reservation("2024-05-22", "16:30", pet4, "皮膚過敏，發紅，癢，輕微脫毛", doctor2));
-		rrepository.save(new Reservation("2024-05-23", "20:00", pet5, "出現咳嗽、呼吸急促", doctor1));
+		rrepository.save(new Reservation("2025-02-17", "10:00", pet1, "食慾不振，寵物不願意進食", doctor1));
+		rrepository.save(new Reservation("2025-02-20", "11:00", pet2, "嘔吐", doctor3));
+		rrepository.save(new Reservation("2025-02-18", "15:30", pet3, "排便異常，持續腹瀉", doctor4));
+		rrepository.save(new Reservation("2025-02-21", "16:30", pet4, "皮膚過敏，發紅，癢，輕微脫毛", doctor2));
+		rrepository.save(new Reservation("2025-02-21", "10:00", pet5, "出現咳嗽、呼吸急促", doctor1));
 		
-		crepository.save(new Clinic("2025-02-07", "09:00", "12:00", doctor1));
-		crepository.save(new Clinic("2025-02-07", "13:00", "16:00", doctor2));
-		crepository.save(new Clinic("2025-02-08", "10:00", "12:00", doctor3));
-		crepository.save(new Clinic("2025-02-08", "14:00", "17:00", doctor4));
-		crepository.save(new Clinic("2025-02-09", "08:00", "11:00", doctor1));
-		crepository.save(new Clinic("2025-02-09", "13:00", "15:00", doctor2));
-		crepository.save(new Clinic("2025-02-10", "09:00", "11:30", doctor3));
-		crepository.save(new Clinic("2025-02-10", "14:00", "17:00", doctor4));
-		crepository.save(new Clinic("2025-02-11", "08:30", "12:00", doctor1));
-		crepository.save(new Clinic("2025-02-11", "13:30", "16:30", doctor2));
+		srepository.save(new Schedule("2025-02-17", "09:00", "12:00", doctor1));
+		srepository.save(new Schedule("2025-02-17", "13:00", "16:00", doctor2));
+		srepository.save(new Schedule("2025-02-18", "10:00", "12:00", doctor3));
+		srepository.save(new Schedule("2025-02-18", "14:00", "17:00", doctor4));
+		srepository.save(new Schedule("2025-02-19", "08:00", "11:00", doctor1));
+		srepository.save(new Schedule("2025-02-19", "13:00", "15:00", doctor2));
+		srepository.save(new Schedule("2025-02-20", "09:00", "11:30", doctor3));
+		srepository.save(new Schedule("2025-02-20", "14:00", "17:00", doctor4));
+		srepository.save(new Schedule("2025-02-21", "08:30", "12:00", doctor1));
+		srepository.save(new Schedule("2025-02-21", "13:30", "16:30", doctor2));
+		
+		System.out.println(orepository.findByIdentifyId("A223456789").get(0).getName());
 	}
 
 

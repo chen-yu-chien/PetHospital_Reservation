@@ -117,10 +117,10 @@ function Reservation() {
                                     <MenuItem value={'-1'}>請選擇</MenuItem>
                                     <MenuItem value={'犬科'}>犬科</MenuItem>
                                     <MenuItem value={'貓科'}>貓科</MenuItem>
-                                    <MenuItem value={'兔科'}>兔科</MenuItem>
-                                    <MenuItem value={'鼠科'}>鼠科</MenuItem>
+                                    {/* <MenuItem value={'兔科'}>兔科</MenuItem>
+                                    <MenuItem value={'鼠科'}>鼠科</MenuItem> */}
                                     <MenuItem value={'鳥科'}>鳥科</MenuItem>
-                                    <MenuItem value={'家醫科'}>家醫科</MenuItem>
+                                    {/* <MenuItem value={'家醫科'}>家醫科</MenuItem> */}
                                     </Select>
                                 </FormControl>
                             </Box>

@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
-// const pages = ['門診預約', '預約查詢'];
+const pages = ['門診預約', '預約查詢'];
 
 function Appbar() {
   return (
@@ -42,34 +42,12 @@ function Appbar() {
             </Box>
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 2, justifyContent: 'flex-end' }}>
-            {/* <Link to={"/Search"} style={{ textDecoration: 'none' }}> */}
-            <Link to={"/ResRecords"} style={{ textDecoration: 'none' }}>
-              <Button
-                sx={{ my: 2, color: 'aquamarine', display: 'flex', bgcolor: 'white', 
-                  borderRadius: 5, width: '7vw', justifyContent: 'center'}}
-              >
-                <Typography 
-                  variant="h6"
-                  sx={{
-                    display: { xs: 'none', md: 'flex' },
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    letterSpacing: '.1rem',
-                    color: 'inherit',
-                    textDecoration: 'none',
-                    ":hover": {color: "white"}
-                  }}
-                >
-                  預約查詢
-                </Typography>
-              </Button>
-            </Link>
-            {/* {pages.map((page) => (
+            {pages.map((page) => (
               <Link to={(page == "門診預約")? "/Reservation" : "/Search"} style={{ textDecoration: 'none' }}>
               <Button
                 key={page}
                 sx={{ my: 2, color: 'aquamarine', display: 'flex', bgcolor: 'white', 
-                  borderRadius: 5, width: '7vw', justifyContent: 'center'}}
+                  borderRadius: 5, width: '7vw', justifyContent: 'center', ":hover": {bgcolor: "aquamarine", color: "white"}}}
               >
                 <Typography 
                   variant="h6"
@@ -80,14 +58,13 @@ function Appbar() {
                     letterSpacing: '.1rem',
                     color: 'inherit',
                     textDecoration: 'none',
-                    ":hover": {color: "white"}
                   }}
                 >
                   {page}
                 </Typography>
               </Button>
               </Link>
-            ))} */}
+            ))}
           </Box>
         </Toolbar>
       </Container>

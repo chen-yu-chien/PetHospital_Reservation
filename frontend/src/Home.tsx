@@ -51,7 +51,7 @@ function Home() {
                             </Typography>
                         </Box>
                         <Box sx={{display: 'flex', justifyContent: 'center'}}>
-                            {/* <Link to="Reservation">
+                            <Link to="Reservation">
                                 <Box sx={{padding: 2, textAlign: 'center'}}>
                                     <Button sx={{color: 'rgba(0, 0, 0, 0)', ":hover": {bgcolor: 'inherit'},}}>
                                         <Typography sx={{color: 'black', fontSize: 20, ":hover": {fontWeight: 700}}}>
@@ -59,13 +59,13 @@ function Home() {
                                         </Typography>
                                     </Button>
                                 </Box>
-                            </Link> */}
+                            </Link>
                             <Box sx={{padding: 2, textAlign: 'center'}}>
-                                {/* <Link to="Search"> */}
-                                <Link to="/ResRecords">
+                                <Link to="Search">
+                                {/* <Link to="/ResRecords"> */}
                                     <Button sx={{color: 'rgba(0, 0, 0, 0)', ":hover": {bgcolor: 'inherit'},}}>
                                         <Typography sx={{color: 'black', fontSize: 20, ":hover": {fontWeight: 700}}}>
-                                            進入系統
+                                            預約查詢
                                         </Typography>
                                     </Button>
                                 </Link>
