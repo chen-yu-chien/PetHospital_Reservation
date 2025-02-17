@@ -24,7 +24,7 @@ public class Doctor {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Clinic> clinicTimes;
+	private List<Schedule> clinicTimes;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -68,11 +68,11 @@ public class Doctor {
 		this.reservations = reservations;
 	}
 
-	public List<Clinic> getClinicTimes() {
+	public List<Schedule> getClinicTimes() {
 		return clinicTimes;
 	}
 
-	public void setClinicTimes(List<Clinic> clinicTimes) {
+	public void setClinicTimes(List<Schedule> clinicTimes) {
 		this.clinicTimes = clinicTimes;
 	}
 

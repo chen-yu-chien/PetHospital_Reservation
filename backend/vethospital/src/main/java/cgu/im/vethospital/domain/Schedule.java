@@ -1,5 +1,7 @@
 package cgu.im.vethospital.domain;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
@@ -11,24 +13,25 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Clinic {
+public class Schedule {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long timeid;
 	
-	private String date, startTime, endTime;
+	private String startTime, endTime;
+	private Date date;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="doctor")
 	private Doctor doctor;
 	
-	public Clinic() {
+	public Schedule() {
 		// TODO Auto-generated constructor stub
 		super();
 	}
 	
-	public Clinic(String date, String startTime, String endTime, cgu.im.vethospital.domain.Doctor doctor) {
+	public Schedule(Date date, String startTime, String endTime, cgu.im.vethospital.domain.Doctor doctor) {
 		super();
 		this.date = date;
 		this.startTime = startTime;
@@ -36,11 +39,11 @@ public class Clinic {
 		this.doctor = doctor;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

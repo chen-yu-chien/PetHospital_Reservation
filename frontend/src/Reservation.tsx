@@ -138,7 +138,7 @@ function Reservation() {
                                 </Typography>
                                 <FormControl fullWidth>
                                     <QueryClientProvider client={queryClient}>
-                                        <DoctorList handleDocChange={handleDocChange}/>
+                                        <DoctorList handleDocChange={handleDocChange} department={dept}/>
                                     </QueryClientProvider>
                                 </FormControl>
                             </Box>

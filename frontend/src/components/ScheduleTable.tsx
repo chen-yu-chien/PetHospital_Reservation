@@ -1,7 +1,7 @@
 import { styled, TableCell, tableCellClasses, TableRow, Button, Typography } from "@mui/material";
 import { DoctorResponse, ScheduleResponse } from "../types";
-import { useQuery } from "@tanstack/react-query";
-import { getSchedule } from "../api/scheduleApi";
+import { useQueries, useQuery } from "@tanstack/react-query";
+import { getSchedule, getScheduleByDateBetween, getScheduleByDeptAndDateBetween, getScheduleByDoctorAndDateBetween } from "../api/scheduleApi";
 import { getDoctor, getDoctorBySchedule } from "../api/doctorApi";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 type TableProps = {
     startdate: string;
     enddate: string;
-    doctorid: string;
+    doctorid: number;
     dept: string;
 };
 
@@ -32,32 +32,59 @@ const StyledTableRow = styled(TableRow)(() => ({
 }));
 
 function ScheduleTable({ startdate, enddate, doctorid, dept }: TableProps) {
-    const { data: scheduleData, error: scheduleError, isSuccess: scheduleSuccess } = useQuery<ScheduleResponse[]>({
-        queryKey: ['schedules'],
-        queryFn: getSchedule
-    });
+    // const { data, error, isSuccess } = useQuery<ScheduleResponse[]>({
+    //     queryKey: ['schedules', doctor, startdate, enddate],
+    //     queryFn: () => getScheduleByDoctorAndDateBetween()
+    // });
 
-    const [docid, setDocid] = useState<string>('');
-    const [docname, setDocname] = useState<string>('');
+    const result = useQueries({
+        queries: [
+            {
+                queryKey: ['schedules', startdate, enddate],
+                queryFn: () => getScheduleByDateBetween(dateFormatting(startdate), dateFormatting(enddate))
+            },
+            {
+                queryKey: ['schedules', dept, startdate, enddate],
+                queryFn: () => getScheduleByDeptAndDateBetween(dept, dateFormatting(startdate), dateFormatting(enddate))
+            },
+            {
+                queryKey: ['schedules', doctorid, startdate, enddate],
+                queryFn: () => getScheduleByDoctorAndDateBetween(doctorid, dateFormatting(startdate), dateFormatting(enddate))
+            }
+        ]
+    })
+
+    const datedata = result[0].data;
+    const dateerror = result[0].error;
+    const dateisSuccess = result[0].isSuccess;
+    const deptdata = result[1].data;
+    const depterror = result[1].error;
+    const deptisSuccess = result[1].isSuccess;
+    const docdata = result[2].data;
+    const docerror = result[2].error;
+    const docisSuccess = result[2].isSuccess;
+
+
+    // const [docid, setDocid] = useState<string>('');
+    // const [docname, setDocname] = useState<string>('');
+
+    const [data, setData] = useState<ScheduleResponse[]>([]);
 
     useEffect(() => {
-        if (scheduleSuccess && scheduleData) {
-            const firstSchedule = scheduleData[0];
-            getDoctorBySchedule(firstSchedule._links.self.href.split('/')[5])
-                .then((response: DoctorResponse) => setDocid(response._links.self.href.split('/')[5]))
-                .catch(err => console.error(err));
+        if(doctorid != -1) {
+            docdata && setData(docdata);
         }
-    }, [scheduleSuccess, scheduleData]);
-
-    useEffect(() => {
-        if (docid) {
-            getDoctor(docid)
-                .then((response: DoctorResponse) => setDocname(response.name))
-                .catch(err => console.error(err));
+        else {
+            if(dept != '-1') {
+                deptdata && setData(deptdata);
+            }
+            else {
+                datedata && setData(datedata);
+            }
         }
-    }, [docid]);
+    }, [doctorid, dept, datedata, deptdata, docdata]);
 
-    if (!scheduleSuccess) {
+    if (!dateisSuccess && !deptisSuccess && !docisSuccess) {
         return (
             <StyledTableRow>
                 <StyledTableCell component="th" scope="row" colSpan={5} align="center">
@@ -66,8 +93,7 @@ function ScheduleTable({ startdate, enddate, doctorid, dept }: TableProps) {
             </StyledTableRow>
         );
     }
-
-    if (scheduleError) {
+    else if (dateerror && depterror && docerror) {
         return (
             <StyledTableRow>
                 <StyledTableCell component="th" scope="row" colSpan={5} align="center">
@@ -76,73 +102,57 @@ function ScheduleTable({ startdate, enddate, doctorid, dept }: TableProps) {
             </StyledTableRow>
         );
     }
-
-    const dates = dateList(startdate, enddate);
-    const filteredSchedules = scheduleData.filter(schedule => {
-        const dateIncluded = dates.includes(schedule.date);
-        const doctorMatches = doctorid === '-1' || docid === doctorid;
-        const deptMatches = dept === '-1' || schedule.dept === dept;
-        return dateIncluded && doctorMatches && deptMatches;
-    });
-
-    if (filteredSchedules.length === 0) {
-        return (
-            <StyledTableRow>
-                <StyledTableCell component="th" scope="row" colSpan={5} align="center">
-                    查無資料
-                </StyledTableCell>
-            </StyledTableRow>
-        );
-    }
-
-    return (
-        <>
-            {filteredSchedules.map((schedule: ScheduleResponse) => (
-                <StyledTableRow key={schedule._links.self.href}>
-                    <StyledTableCell component="th" scope="row" align="center">
-                        {schedule.date}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">{schedule.starttime} ~ {schedule.endtime}</StyledTableCell>
-                    <StyledTableCell align="center">{schedule.dept}</StyledTableCell>
-                    <StyledTableCell align="center">{docname}</StyledTableCell>
-                    <StyledTableCell align="center">
-                        <Link to="/PetReserve"
-                            state={{ docdate: schedule.date, doctorid: docid, starttime: schedule.starttime, endtime: schedule.endtime }}>
-                            <Button sx={{
-                                border: 1,
-                                borderColor: 'aquamarine',
-                                borderWidth: 2,
-                                bgcolor: 'white',
-                                color: 'aquamarine',
-                                ":hover": { bgcolor: "aquamarine", color: "white" }
-                            }}>
-                                <Typography sx={{ color: 'inherit', fontSize: 18, fontWeight: 700 }}>
-                                    預約
-                                </Typography>
-                            </Button>
-                        </Link>
+    else {
+        if(data.length == 0) {
+            return (
+                <StyledTableRow>
+                    <StyledTableCell component="th" scope="row" colSpan={5} align="center">
+                        查無資料
                     </StyledTableCell>
                 </StyledTableRow>
-            ))}
-        </>
-    );
+            );
+        }
+        else {
+            return (
+                <>
+                    {data.map((schedule: ScheduleResponse) => (
+                        <StyledTableRow key={schedule.timeid}>
+                            <StyledTableCell component="th" scope="row" align="center">
+                                {schedule.date.split('T')[0]}
+                            </StyledTableCell>
+                            <StyledTableCell align="center">{schedule.startTime} ~ {schedule.endTime}</StyledTableCell>
+                            <StyledTableCell align="center">{schedule.doctor.department}</StyledTableCell>
+                            <StyledTableCell align="center">{schedule.doctor.name}</StyledTableCell>
+                            <StyledTableCell align="center">
+                                <Link to="/PetReserve"
+                                    state={{ docdate: schedule.date, doctorid: schedule.doctor.doctorid, starttime: schedule.startTime, 
+                                        endtime: schedule.endTime }}>
+                                    <Button sx={{
+                                        border: 1,
+                                        borderColor: 'aquamarine',
+                                        borderWidth: 2,
+                                        bgcolor: 'white',
+                                        color: 'aquamarine',
+                                        ":hover": { bgcolor: "aquamarine", color: "white" }
+                                    }}>
+                                        <Typography sx={{ color: 'inherit', fontSize: 18, fontWeight: 700 }}>
+                                            預約
+                                        </Typography>
+                                    </Button>
+                                </Link>
+                            </StyledTableCell>
+                        </StyledTableRow>
+                    ))}
+                </>
+            );
+        }
+        
+    }
 }
 
 export default ScheduleTable;
 
-function dateList(sdate: string, edate: string): string[] {
-    const _start = new Date(sdate).getTime();
-    const _end = new Date(edate).getTime();
-    const list: string[] = [];
-    let current = _start;
-    while (current <= _end) {
-        const formated = new Date(current);
-        if (formated.getMonth() + 1 < 10) {
-            list.push([formated.getFullYear(), '0' + (formated.getMonth() + 1).toString(), formated.getDate()].join('-'));
-        } else {
-            list.push([formated.getFullYear(), (formated.getMonth() + 1).toString(), formated.getDate()].join('-'));
-        }
-        current += 24 * 60 * 60 * 1000;
-    }
-    return list;
+function dateFormatting(date: string): string {
+    const newDate = date.split('/').join('-');
+    return newDate;
 }

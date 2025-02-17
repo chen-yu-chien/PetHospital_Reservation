@@ -1,8 +1,9 @@
 export type ScheduleResponse = {
+    timeid: number,
     date: string,
     startTime: string,
     endTime: string,
-    dept: string
+    doctor: DoctorResponse,
 }
 
 export type ReservationResponse = {

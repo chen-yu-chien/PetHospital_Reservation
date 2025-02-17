@@ -1,9 +1,9 @@
-import { Box, Button, Container, Grid } from "@mui/material"
 import homeImage from "./image/home.jpg"
 import logo from "./image/logo_g.png"
 import Typography from '@mui/material/Typography';
 import './App.css'
 import { Link } from "react-router-dom";
+import { Box, Button, Container, Grid } from "@mui/material"
 
 function Home() {
     return(
