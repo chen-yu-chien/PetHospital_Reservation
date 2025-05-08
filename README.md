@@ -1,7 +1,7 @@
 # PetHospital_Reservation
 ## 開發環境使用
-* 前端：Eclipse
-* 後端：VSCode
+* 前端：VSCode
+* 後端：Eclipse
 ## 專案啟動
 * 後端
 1. 開啟 Eclipse 後，從檔案系統匯入 Gradle 專案
